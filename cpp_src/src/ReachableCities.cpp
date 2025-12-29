@@ -3,25 +3,38 @@
 
 vector<string> ReachableCities::find(Graph& g, string start) {
     vector<string> reachable;
-    if(!g.getNeighbors(start).empty() || g.hasEdge(start, start)) { // Check if node exists basically
-        // Or check g.getNodes()
-    }
-    // Better check:
+    
+    // Check if start city exists
+    auto nodes = g.getNodes();
     bool exists = false;
-    for(const auto& n : g.getNodes()) if(n == start) exists = true;
-    if(!exists) return reachable;
+    for (const auto& n : nodes) {
+        if (n == start) {
+            exists = true;
+            break;
+        }
+    }
+    if (!exists) return reachable;
 
     map<string, bool> visited;
-    CustomStack<string> s;
+    CustomStack<string> s; // Using Person 1's Stack for DFS
     s.push(start);
 
     while (!s.empty()) {
-        string u = s.top(); s.pop();
+        string u = s.top(); 
+        s.pop();
+        
         if (!visited[u]) {
             visited[u] = true;
-            if (u != start) reachable.push_back(u);
-            for (auto& e : g.getNeighbors(u)) {
-                s.push(e.dest);
+            
+            // Add to list if it's not the starting city
+            if (u != start) {
+                reachable.push_back(u);
+            }
+            
+            for (const auto& e : g.getNeighbors(u)) {
+                if (!visited[e.dest]) {
+                    s.push(e.dest);
+                }
             }
         }
     }
