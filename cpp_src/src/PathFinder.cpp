@@ -59,8 +59,9 @@ vector<string> PathFinder::getAllCities() {
 vector<tuple<string, string, int>> PathFinder::getAllRoutes() {
     auto edges = graph.getAllEdges();
     vector<tuple<string, string, int>> result;
-    for (const auto& [weight, city1, city2] : edges) {
-        result.push_back({city1, city2, weight});
+    for (size_t i = 0; i < edges.size(); ++i) {
+        const auto& edge = edges[i];
+        result.push_back(make_tuple(get<1>(edge), get<2>(edge), get<0>(edge)));
     }
     return result;
 }
