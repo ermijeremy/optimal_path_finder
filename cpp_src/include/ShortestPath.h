@@ -7,14 +7,16 @@
 
 struct ShortestPathResult {
     bool found;
-    vector<string> path;
+    std::vector<std::string> path;
     int distance;
-    string message;
+    std::string message;
 };
 
 class ShortestPath {
 public:
-    static ShortestPathResult find(Graph& g, string start, string end);
+    static ShortestPathResult find(const Graph& g,
+                                   const std::string& start,
+                                   const std::string& end);
 };
 
 #endif // SHORTEST_PATH_H

@@ -1,6 +1,7 @@
 #include "../include/ShortestPath.h"
 #include <map>
 #include <algorithm>
+#include <climits>
 
 ShortestPathResult ShortestPath::find(Graph& g, string start, string end) {
     ShortestPathResult res;
@@ -16,6 +17,14 @@ ShortestPathResult ShortestPath::find(Graph& g, string start, string end) {
 
     if(!startExists || !endExists) {
         res.message = "One or both cities not found.";
+        return res;
+    }
+
+    if (start == end) {
+        res.found = true;
+        res.distance = 0;
+        res.path = {start};
+        res.message = "Start and destination are the same.";
         return res;
     }
 
