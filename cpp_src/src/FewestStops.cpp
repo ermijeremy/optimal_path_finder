@@ -1,21 +1,21 @@
 #include "../include/FewestStops.h"
 #include <map>
-#include <algorithm>
 
 FewestStopsResult FewestStops::find(Graph& g, string start, string end) {
     FewestStopsResult res;
     res.found = false;
     res.stops = 0;
 
+    // Check if cities exist
     auto nodes = g.getNodes();
     bool startExists = false, endExists = false;
-    for(const auto& n : nodes) {
-        if(n == start) startExists = true;
-        if(n == end) endExists = true;
+    for (const auto& n : nodes) {
+        if (n == start) startExists = true;
+        if (n == end) endExists = true;
     }
 
-    if(!startExists || !endExists) {
-        res.message = "One or both cities not found.";
+    if (!startExists || !endExists) {
+        res.message = "One or both cities not found in the network.";
         return res;
     }
 
@@ -27,25 +27,32 @@ FewestStopsResult FewestStops::find(Graph& g, string start, string end) {
     visited[start] = true;
 
     while (!q.empty()) {
-        string u = q.front(); q.dequeue();
+        string u = q.front(); 
+        q.dequeue();
         
         if (u == end) {
             res.found = true;
-            res.message = "Path found.";
+            res.message = "Path found with fewest stops.";
             
-            // Reconstruct
+            // Reconstruct path using CustomStack (Person 1's tool)
+            CustomStack<string> pathStack;
             string curr = end;
-            while(curr != start) {
-                res.path.push_back(curr);
+            while (curr != start) {
+                pathStack.push(curr);
                 curr = parent[curr];
             }
-            res.path.push_back(start);
-            reverse(res.path.begin(), res.path.end());
+            pathStack.push(start);
+
+            while (!pathStack.empty()) {
+                res.path.push_back(pathStack.top());
+                pathStack.pop();
+            }
+            
             res.stops = res.path.size() - 1;
             return res;
         }
 
-        for (auto& e : g.getNeighbors(u)) {
+        for (const auto& e : g.getNeighbors(u)) {
             if (!visited[e.dest]) {
                 visited[e.dest] = true;
                 parent[e.dest] = u;
@@ -54,6 +61,6 @@ FewestStopsResult FewestStops::find(Graph& g, string start, string end) {
         }
     }
 
-    res.message = "No path found.";
+    res.message = "No path exists between these cities.";
     return res;
 }
