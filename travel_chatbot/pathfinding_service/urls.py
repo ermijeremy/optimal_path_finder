@@ -6,6 +6,7 @@ app_name = 'pathfinding_service'
 urlpatterns = [
     path('', views.index, name='index'),
     path('api/add_route', views.add_route, name='add_route'),
+    path('api/update_route', views.update_route, name='update_route'),
     path('api/remove_route', views.remove_route, name='remove_route'),
     path('api/shortest_path', views.shortest_path, name='shortest_path'),
     path('api/longest_path', views.longest_path, name='longest_path'),

@@ -54,7 +54,13 @@
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
                                 <path d="M12 5v14M5 12h14" />
                             </svg>
-                            Add Route
+                            Add
+                        </button>
+                        <button class="btn btn-secondary" id="updateRouteBtn" style="background-color: #f59e0b; color: white;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                            </svg>
+                            Update
                         </button>
                         <button class="btn btn-danger" id="removeRouteBtn">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -102,25 +108,36 @@
 
                     <button class="btn btn-feature" id="multiCityBtn">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
-                            <circle cx="12" cy="10" r="3" />
+                            <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
-                        Plan Tour
+                        Multi-City Tour (TSP)
                     </button>
 
                     <button class="btn btn-feature" id="cheapestNetworkBtn">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                            <path d="M12 2L2 7l10 5 10-5-10-5z" />
-                            <path d="M2 17l10 5 10-5" />
-                            <path d="M2 12l10 5 10-5" />
+                            <path d="M13 10V3L4 14h7v7l9-11h-7z" />
                         </svg>
-                        Cheapest Network
+                        Cheapest Network (MST)
                     </button>
                 </div>
 
                 <div class="control-section">
-                    <button class="btn btn-secondary" id="clearAllBtn">Clear All</button>
-                    <button class="btn btn-secondary" id="loadSampleBtn">Load Sample</button>
+                    <h3 class="section-title">Utilities</h3>
+                    <div class="button-group">
+                        <button class="btn btn-primary" id="loadSampleBtn" style="background: var(--success);">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                            </svg>
+                            Load Sample
+                        </button>
+                        <button class="btn btn-danger" id="clearAllBtn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                            Clear All
+                        </button>
+                    </div>
                 </div>
             </aside>
 

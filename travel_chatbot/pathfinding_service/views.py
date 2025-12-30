@@ -33,6 +33,22 @@ def add_route(request):
     return JsonResponse({'success': False, 'message': 'Invalid request'})
 
 @csrf_exempt
+def update_route(request):
+    """Update an existing route between two cities"""
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        city1 = data.get('city1')
+        city2 = data.get('city2')
+        distance = int(data.get('distance'))
+        
+        result = pf.update_city(city1, city2, distance)
+        return JsonResponse({
+            'success': result.success,
+            'message': result.message
+        })
+    return JsonResponse({'success': False, 'message': 'Invalid request'})
+
+@csrf_exempt
 def remove_route(request):
     """Remove a route between two cities"""
     if request.method == 'POST':
