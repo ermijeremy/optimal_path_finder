@@ -7,6 +7,27 @@ void Graph::addEdge(string u, string v, int w) {
     adjList[v].push_back({u, w});
 }
 
+bool Graph::updateEdge(string u, string v, int w) {
+    if (!hasEdge(u, v)) return false;
+    
+    // Update weight in u's list
+    for (auto& edge : adjList[u]) {
+        if (edge.dest == v) {
+            edge.weight = w;
+            break;
+        }
+    }
+    
+    // Update weight in v's list
+    for (auto& edge : adjList[v]) {
+        if (edge.dest == u) {
+            edge.weight = w;
+            break;
+        }
+    }
+    return true;
+}
+
 void Graph::removeEdge(string u, string v) {
     if (adjList.count(u)) {
         auto& edges = adjList[u];

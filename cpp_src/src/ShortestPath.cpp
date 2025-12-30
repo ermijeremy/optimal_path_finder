@@ -53,7 +53,7 @@ ShortestPathResult ShortestPath::find(Graph& g, string start, string end) {
         res.found = true;
         res.distance = dist[end];
         
-        // Reconstruct path using CustomStack (Person 1's tool)
+        // Reconstruct path using CustomStack
         CustomStack<string> pathStack;
         string curr = end;
         while (curr != start) {

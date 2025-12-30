@@ -26,6 +26,7 @@ public:
 
     // Graph operations
     OperationResult addCity(string city1, string city2, int distance);
+    OperationResult updateCity(string city1, string city2, int distance);
     OperationResult removeCity(string city1, string city2);
     
     // Query operations

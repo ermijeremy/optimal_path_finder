@@ -14,6 +14,24 @@ OperationResult PathFinder::addCity(string city1, string city2, int distance) {
     return res;
 }
 
+OperationResult PathFinder::updateCity(string city1, string city2, int distance) {
+    OperationResult res;
+    if (distance <= 0) {
+        res.success = false;
+        res.message = "Distance must be positive.";
+        return res;
+    }
+    
+    if (graph.updateEdge(city1, city2, distance)) {
+        res.success = true;
+        res.message = "Route updated: " + city1 + " <-> " + city2 + " (" + to_string(distance) + " km)";
+    } else {
+        res.success = false;
+        res.message = "Route not found. Use 'Add Route' to create it.";
+    }
+    return res;
+}
+
 OperationResult PathFinder::removeCity(string city1, string city2) {
     OperationResult res;
     if (!graph.hasEdge(city1, city2)) {
