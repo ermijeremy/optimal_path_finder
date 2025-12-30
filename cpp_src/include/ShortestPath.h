@@ -2,19 +2,22 @@
 #define SHORTEST_PATH_H
 
 #include "Graph.h"
+#include "DataStructures.h"
 #include <string>
 #include <vector>
 
 struct ShortestPathResult {
     bool found;
-    vector<string> path;
+    std::vector<std::string> path;
     int distance;
-    string message;
+    std::string message;
 };
 
 class ShortestPath {
 public:
-    static ShortestPathResult find(Graph& g, string start, string end);
+    static ShortestPathResult find(Graph& g,
+                                   const std::string& start,
+                                   const std::string& end);
 };
 
 #endif // SHORTEST_PATH_H
