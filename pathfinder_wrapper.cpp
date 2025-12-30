@@ -59,6 +59,9 @@ PYBIND11_MODULE(pathfinder, m) {
         .def("add_city", &PathFinder::addCity,
              "Add a route between two cities",
              py::arg("city1"), py::arg("city2"), py::arg("distance"))
+        .def("update_city", &PathFinder::updateCity,
+             "Update an existing route between two cities",
+             py::arg("city1"), py::arg("city2"), py::arg("distance"))
         .def("remove_city", &PathFinder::removeCity,
              "Remove a route between two cities",
              py::arg("city1"), py::arg("city2"))

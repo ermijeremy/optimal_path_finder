@@ -34,16 +34,19 @@ MSTResult CheapestNetwork::find(Graph& g) {
             res.edges.push_back(make_tuple(u, v, weight));
             res.totalCost += weight;
             edgeCount++;
-            
-            if (edgeCount == (int)nodes.size() - 1) break;
         }
     }
 
-    if (nodes.size() == 1 || edgeCount == (int)nodes.size() - 1) {
+    // MST is always found, even if it's a forest (not fully connected)
+    if (edgeCount > 0) {
         res.found = true;
-        res.message = "Cheapest network found successfully.";
+        if (edgeCount == (int)nodes.size() - 1) {
+            res.message = "Minimum Spanning Tree found (fully connected).";
+        } else {
+            res.message = "Minimum Spanning Forest found (graph has multiple components).";
+        }
     } else {
-        res.message = "Graph is not fully connected.";
+        res.message = "No edges found in graph.";
     }
 
     return res;

@@ -15,9 +15,11 @@ struct Edge {
 class Graph {
 private:
     map<string, vector<Edge>> adjList;
+    map<string, string> lowerToOriginal; // lowercase -> original case
 
 public:
     void addEdge(string u, string v, int w);
+    bool updateEdge(string u, string v, int w);
     void removeEdge(string u, string v);
     bool hasEdge(string u, string v);
     vector<Edge> getNeighbors(string u);

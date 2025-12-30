@@ -484,6 +484,15 @@ class PathFinderAPI {
         return await response.json();
     }
 
+    async updateRoute(city1, city2, distance) {
+        const response = await fetch(`${this.baseUrl}/update_route`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ city1, city2, distance })
+        });
+        return await response.json();
+    }
+
     async removeRoute(city1, city2) {
         const response = await fetch(`${this.baseUrl}/remove_route`, {
             method: 'POST',
@@ -573,6 +582,7 @@ class PathFinderApp {
     initEventListeners() {
         // Build map buttons
         document.getElementById('addRouteBtn').addEventListener('click', () => this.addRoute());
+        document.getElementById('updateRouteBtn').addEventListener('click', () => this.updateRoute());
         document.getElementById('removeRouteBtn').addEventListener('click', () => this.removeRoute());
 
         // Feature buttons
@@ -647,6 +657,30 @@ class PathFinderApp {
         } catch (error) {
             console.error('Error:', error);
             alert('Failed to add route');
+        }
+    }
+
+    async updateRoute() {
+        const city1 = document.getElementById('fromCity').value.trim();
+        const city2 = document.getElementById('toCity').value.trim();
+        const distance = parseInt(document.getElementById('distance').value);
+
+        if (!city1 || !city2 || !distance || distance <= 0) {
+            alert('Please enter valid cities and distance');
+            return;
+        }
+
+        try {
+            const result = await this.api.updateRoute(city1, city2, distance);
+            if (result.success) {
+                await this.loadGraph();
+                this.showResult('Route Updated', `<p>${result.message}</p>`);
+            } else {
+                alert(result.message);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Failed to update route');
         }
     }
 

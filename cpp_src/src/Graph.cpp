@@ -1,39 +1,109 @@
 #include "../include/Graph.h"
+#include <algorithm>
+
+string toLower(string s) {
+    transform(s.begin(), s.end(), s.begin(), ::tolower);
+    return s;
+}
 
 void Graph::addEdge(string u, string v, int w) {
+    string lu = toLower(u);
+    string lv = toLower(v);
+    
+    string keyU = lowerToOriginal.count(lu) ? lowerToOriginal[lu] : u;
+    string keyV = lowerToOriginal.count(lv) ? lowerToOriginal[lv] : v;
+    
+    lowerToOriginal[lu] = keyU;
+    lowerToOriginal[lv] = keyV;
+    
     if (hasEdge(u, v)) removeEdge(u, v);
     
-    adjList[u].push_back({v, w});
-    adjList[v].push_back({u, w});
+    adjList[keyU].push_back({keyV, w});
+    adjList[keyV].push_back({keyU, w});
+}
+
+bool Graph::updateEdge(string u, string v, int w) {
+    string lu = toLower(u);
+    string lv = toLower(v);
+    
+    if (!lowerToOriginal.count(lu) || !lowerToOriginal.count(lv)) return false;
+    
+    string keyU = lowerToOriginal[lu];
+    string keyV = lowerToOriginal[lv];
+    
+    if (!hasEdge(u, v)) return false;
+    
+    // Update weight in u's list
+    for (auto& edge : adjList[keyU]) {
+        if (edge.dest == keyV) {
+            edge.weight = w;
+            break;
+        }
+    }
+    
+    // Update weight in v's list
+    for (auto& edge : adjList[keyV]) {
+        if (edge.dest == keyU) {
+            edge.weight = w;
+            break;
+        }
+    }
+    return true;
 }
 
 void Graph::removeEdge(string u, string v) {
-    if (adjList.count(u)) {
-        auto& edges = adjList[u];
+    string lu = toLower(u);
+    string lv = toLower(v);
+    
+    if (!lowerToOriginal.count(lu) || !lowerToOriginal.count(lv)) return;
+    
+    string keyU = lowerToOriginal[lu];
+    string keyV = lowerToOriginal[lv];
+    
+    if (adjList.count(keyU)) {
+        auto& edges = adjList[keyU];
         for (auto it = edges.begin(); it != edges.end(); ) {
-            if (it->dest == v) it = edges.erase(it);
+            if (it->dest == keyV) it = edges.erase(it);
             else ++it;
         }
+        if (edges.empty()) {
+            adjList.erase(keyU);
+        }
     }
-    if (adjList.count(v)) {
-        auto& edges = adjList[v];
+    if (adjList.count(keyV)) {
+        auto& edges = adjList[keyV];
         for (auto it = edges.begin(); it != edges.end(); ) {
-            if (it->dest == u) it = edges.erase(it);
+            if (it->dest == keyU) it = edges.erase(it);
             else ++it;
+        }
+        if (edges.empty()) {
+            adjList.erase(keyV);
         }
     }
 }
 
 bool Graph::hasEdge(string u, string v) {
-    if (adjList.find(u) == adjList.end()) return false;
-    for (const auto& e : adjList[u]) {
-        if (e.dest == v) return true;
+    string lu = toLower(u);
+    string lv = toLower(v);
+    
+    if (!lowerToOriginal.count(lu) || !lowerToOriginal.count(lv)) return false;
+    
+    string keyU = lowerToOriginal[lu];
+    string keyV = lowerToOriginal[lv];
+    
+    if (adjList.find(keyU) == adjList.end()) return false;
+    for (const auto& e : adjList[keyU]) {
+        if (e.dest == keyV) return true;
     }
     return false;
 }
 
 vector<Edge> Graph::getNeighbors(string u) {
-    if (adjList.find(u) != adjList.end()) return adjList[u];
+    string lu = toLower(u);
+    if (!lowerToOriginal.count(lu)) return {};
+    
+    string keyU = lowerToOriginal[lu];
+    if (adjList.find(keyU) != adjList.end()) return adjList[keyU];
     return {};
 }
 
@@ -47,6 +117,7 @@ vector<string> Graph::getNodes() {
 
 void Graph::clear() {
     adjList.clear();
+    lowerToOriginal.clear();
 }
 
 int Graph::getCityCount() {

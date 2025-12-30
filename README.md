@@ -11,9 +11,12 @@ An intelligent Django-based chatbot that integrates with a C++ pathfinding engin
 🎨 **Modern Premium UI** - Beautiful dark mode interface with smooth animations
 
 📊 **Multiple Path Finding Modes**:
-- Shortest path (Dijkstra's algorithm) 
-- Fewest stops (BFS)
-- Reachable cities (DFS)
+- **Shortest Path** (Dijkstra's Algorithm) - Find the quickest route
+- **Longest Path** (DFS Backtracking) - Find the most scenic/longest route
+- **Fewest Stops** (BFS) - Minimize transfers
+- **Reachable Cities** (DFS) - See all connected destinations
+- **Multi-City Tour** (TSP) - Plan a round trip visiting multiple cities
+- **Cheapest Network** (MST) - Connect all cities with minimum cost
 
 🔧 **Route Management** - Add, delete, and manage routes through conversation
 
@@ -37,6 +40,7 @@ An intelligent Django-based chatbot that integrates with a C++ pathfinding engin
 - C++ compiler (g++)
 - pip (Python package manager)
 - git
+- **pybind11** (Required for C++ bindings)
 
 ### Complete Setup from Scratch
 
@@ -49,7 +53,7 @@ An intelligent Django-based chatbot that integrates with a C++ pathfinding engin
 2. **Create virtual environment**:
    ```bash
    python3 -m venv venv
-   source venv/bin/activate
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
    ```
 
 3. **Install Python dependencies**:
@@ -59,9 +63,9 @@ An intelligent Django-based chatbot that integrates with a C++ pathfinding engin
 
 4. **Compile the C++ pathfinding module**:
    ```bash
-   python setup.py build_ext --inplace
+   python setup_new.py build_ext --inplace
    ```
-   This will create `pathfinding.cpython-*.so` that Django can import.
+   This will create `pathfinder.cp312-win_amd64.pyd` (Windows) or `pathfinder.cpython-*.so` (Linux/Mac) that Django can import.
 
 5. **Navigate to Django project and run migrations**:
    ```bash
@@ -222,15 +226,6 @@ print(result.success, result.message)
 path = planner.find_shortest_path("Paris", "London")
 print(path.path, path.distance)
 ```
-
-### Adding New Intents
-1. Add pattern to `chatbot/nlp_processor.py`
-2. Create handler function in `core/views.py`
-3. Update help text
-
-## License
-
-MIT License - Feel free to use and modify!
 
 ## Author
 

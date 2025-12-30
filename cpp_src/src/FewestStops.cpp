@@ -34,7 +34,7 @@ FewestStopsResult FewestStops::find(Graph& g, string start, string end) {
             res.found = true;
             res.message = "Path found with fewest stops.";
             
-            // Reconstruct path using CustomStack (Person 1's tool)
+            // Reconstruct path using CustomStack
             CustomStack<string> pathStack;
             string curr = end;
             while (curr != start) {
