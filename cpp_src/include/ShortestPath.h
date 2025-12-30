@@ -2,6 +2,7 @@
 #define SHORTEST_PATH_H
 
 #include "Graph.h"
+#include "DataStructures.h"
 #include <string>
 #include <vector>
 
@@ -14,7 +15,7 @@ struct ShortestPathResult {
 
 class ShortestPath {
 public:
-    static ShortestPathResult find(const Graph& g,
+    static ShortestPathResult find(Graph& g,
                                    const std::string& start,
                                    const std::string& end);
 };
