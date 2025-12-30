@@ -15,6 +15,7 @@ struct Edge {
 class Graph {
 private:
     map<string, vector<Edge>> adjList;
+    map<string, string> lowerToOriginal; // lowercase -> original case
 
 public:
     void addEdge(string u, string v, int w);
